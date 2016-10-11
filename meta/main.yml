@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  author: Michael Lynch
+  description: Automated Prosper P2P lending account manager
+  license: Apache2
+  min_ansible_version: 2.1
+  platforms:
+  - name: Ubuntu
+    versions:
+      - trusty
+      - xenial
+  galaxy_tags:
+    - prosper
+    - p2p lending
+    - prosperbot
+dependencies:
+  - { role: joshualund.golang }

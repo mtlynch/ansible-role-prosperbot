@@ -1,0 +1,18 @@
+description "Run prosperbot"
+
+start on runlevel [3]
+stop on runlevel [!2345]
+
+setuid prosperbot
+setgid prosperbot
+
+env GOPATH={{ prosperbot_gopath }}
+env GOROOT={{ prosperbot_goroot }}
+env PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:{{ prosperbot_goroot }}/bin
+
+respawn
+
+script
+	cd $GOPATH/src/github.com/mtlynch/prosperbot
+	go run main.go --creds={{ prosperbot_creds_file }} {{ prosperbot_extra_args }}
+end script

@@ -1,0 +1,60 @@
+---
+- name: create prosperbot group
+  group:
+    name: "{{ prosperbot_group }}"
+    state: "present"
+
+- name: create prosperbot user
+  user:
+    name: "{{ prosperbot_user }}"
+    group: "{{ prosperbot_group }}"
+    system: "yes"
+
+- name: create gopath directory
+  file:
+    path: "{{ prosperbot_gopath }}"
+    state: directory
+    owner: "{{ prosperbot_user }}"
+    group: "{{ prosperbot_group }}"
+
+- name: install git
+  apt:
+    name: git
+    state: installed
+
+- name: get prosperbot go dependencies
+  command: go get -u github.com/mtlynch/prosperbot
+  environment:
+    PATH: "{{ ansible_env.PATH }}:{{ prosperbot_goroot }}/bin"
+    GOPATH: "{{ prosperbot_gopath }}"
+    GOROOT: "{{ prosperbot_goroot }}"
+  tags:
+    # ANSIBLE0012 Commands should not change things if nothing needs doing
+    - skip_ansible_lint
+
+- name: fix gopath permissions
+  file:
+    path: "{{ prosperbot_gopath }}"
+    state: directory
+    owner: "{{ prosperbot_user }}"
+    group: "{{ prosperbot_group }}"
+    recurse: yes
+
+- name: copy credentials file
+  template:
+    src: prosper-creds.json.j2
+    dest: "{{ prosperbot_creds_file }}"
+    owner: "{{ prosperbot_user }}"
+    group: "{{ prosperbot_group }}"
+    mode: 0400
+
+- name: add enable-buying flag
+  set_fact:
+    prosperbot_extra_args: "{{ prosperbot_extra_args }} --enable-buying"
+  when: prosperbot_enable_buying
+
+- name: copy upstart script
+  template:
+    src: prosperbot.conf.j2
+    dest: /etc/init/prosperbot.conf
+    mode: 0755
