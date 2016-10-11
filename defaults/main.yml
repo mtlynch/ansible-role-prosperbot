@@ -1,0 +1,8 @@
+---
+prosperbot_user: prosperbot
+prosperbot_group: "{{ prosperbot_user }}"
+prosperbot_gopath: "/home/{{ prosperbot_user }}/go"
+prosperbot_goroot: "/usr/local/go"
+prosperbot_creds_file: "{{ prosperbot_gopath }}/src/github.com/mtlynch/prosperbot/prosper-creds.json"
+prosperbot_enable_buying: true
+prosperbot_extra_args: ""
