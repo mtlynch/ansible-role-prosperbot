@@ -50,11 +50,40 @@ Additional arguments to pass to the ProsperBot process on startup.
 
 ## Example Playbook
 
-TODO
+The following playbook will install ProsperBot to a host, configured to authenticate with your Prosper credentials. ProsperBot depends on Redis, so in this example, we'll be installing the [DavidWittman.redis](https://github.com/DavidWittman/ansible-redis) Ansible role on the same host.
+
+#### `secrets.yml`
+
+```yaml
+prosperbot_prosper_client_id: [insert your Prosper client ID]
+prosperbot_prosper_client_secret: [insert your Prosper client secret]
+prosperbot_prosper_username: [insert your Prosper username]
+prosperbot_prosper_password: [insert your Prosper password]
+```
+
+`prosperbot_prosper_client_id` and `prosperbot_prosper_client_secret` are the values Prosper assigns to you when you generate OAuth credentials on the [OAuth Settings](https://www.prosper.com/oauth#/settings) page.
+
+`prosperbot_prosper_username` and `prosperbot_prosper_password` are the credentials you use to log in to Prosper via the web site.
+
+#### `example.yml`
+
+```yaml
+- hosts: all
+  vars_files:
+    - secrets.yml
+  vars:
+    - prosperbot_enable_buying: false
+  roles:
+    - { role: DavidWittman.redis }
+    - { role: ansible-role-prosperbot }
+```
 
 ### Running Example Playbook
 
-TODO
+```shell
+ansible-galaxy install DavidWittman.redis mtlynch.prosperbot
+ansible-playbook example.yml
+```
 
 ## License
 
