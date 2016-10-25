@@ -31,6 +31,8 @@
   tags:
     # ANSIBLE0012 Commands should not change things if nothing needs doing
     - skip_ansible_lint
+  notify:
+    - restart prosperbot
 
 - name: fix gopath permissions
   file:
@@ -58,3 +60,5 @@
     src: prosperbot.conf.j2
     dest: /etc/init/prosperbot.conf
     mode: 0755
+  notify:
+    - restart prosperbot
