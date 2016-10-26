@@ -75,7 +75,7 @@ prosperbot_prosper_password: [insert your Prosper password]
     - prosperbot_enable_buying: false
   roles:
     - { role: DavidWittman.redis }
-    - { role: ansible-role-prosperbot }
+    - { role: mtlynch.prosperbot }
 ```
 
 ### Running Example Playbook
