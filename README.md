@@ -15,7 +15,7 @@ prosperbot_user: prosperbot
 prosperbot_group: prosperbot
 ```
 
-The user and group under which to run PropserBot.
+The user and group under which to run ProsperBot.
 
 ```yaml
 prosperbot_gopath: /home/prosperbot/go
