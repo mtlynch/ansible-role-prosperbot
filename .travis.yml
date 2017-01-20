@@ -3,6 +3,8 @@ sudo: required
 env:
   - distro: ubuntu1404
     init: /sbin/init
+  - distro: ubuntu1604
+    init: /lib/systemd/systemd
 
 services:
   - docker
